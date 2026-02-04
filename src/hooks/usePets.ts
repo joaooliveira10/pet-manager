@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
-import { petService, GetPetsParams } from '@/services/petService';
+import { GetPetsParams, petService } from '@/services/petService';
 import {
   PagedPetResponseDto,
-  PetResponseDto,
-  PetResponseCompletoDto,
   PetRequestDto,
+  PetResponseCompletoDto,
+  PetResponseDto,
 } from '@/types';
+import { useCallback, useState } from 'react';
 
 interface UsePetsReturn {
   pets: PetResponseDto[];

@@ -1,11 +1,11 @@
-import api from './api';
 import {
-  TutorResponseDto,
-  TutorResponseComPetsDto,
-  TutorRequestDto,
-  PagedTutorResponseDto,
   AnexoResponseDto,
+  PagedTutorResponseDto,
+  TutorRequestDto,
+  TutorResponseComPetsDto,
+  TutorResponseDto,
 } from '@/types';
+import api from './api';
 
 export interface GetTutoresParams {
   page?: number;
@@ -62,7 +62,7 @@ export const tutorService = {
   async uploadPhoto(id: number, file: File): Promise<AnexoResponseDto> {
     const formData = new FormData();
     formData.append('foto', file);
-    
+
     const response = await api.post<AnexoResponseDto>(
       `/v1/tutores/${id}/fotos`,
       formData,

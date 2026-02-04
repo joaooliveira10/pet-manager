@@ -1,27 +1,31 @@
-'use client';
+'use client'
 
-import React, { useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Upload, X } from 'lucide-react';
-import { Button, Input, Alert } from '@/components/common';
-import { tutorSchema, TutorFormData } from '@/utils/validators';
-import { TutorResponseDto } from '@/types';
-import { maskPhone } from '@/utils/masks';
+import { Alert, Button, Input } from '@/components/common'
+import { TutorResponseDto } from '@/types'
+import { maskPhone } from '@/utils/masks'
+import { TutorFormData, tutorSchema } from '@/utils/validators'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Upload, X } from 'lucide-react'
+import React, { useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 interface TutorFormProps {
-  initialData?: TutorResponseDto;
-  onSubmit: (data: TutorFormData, photo?: File) => Promise<void>;
-  isLoading?: boolean;
+  initialData?: TutorResponseDto
+  onSubmit: (data: TutorFormData, photo?: File) => Promise<void>
+  isLoading?: boolean
 }
 
-export function TutorForm({ initialData, onSubmit, isLoading = false }: TutorFormProps) {
-  const [photo, setPhoto] = useState<File | null>(null);
+export function TutorForm({
+  initialData,
+  onSubmit,
+  isLoading = false,
+}: TutorFormProps) {
+  const [photo, setPhoto] = useState<File | null>(null)
   const [photoPreview, setPhotoPreview] = useState<string | null>(
-    initialData?.foto?.url || null
-  );
-  const [error, setError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+    initialData?.foto?.url || null,
+  )
+  const [error, setError] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const {
     register,
@@ -37,53 +41,49 @@ export function TutorForm({ initialData, onSubmit, isLoading = false }: TutorFor
       email: initialData?.email || '',
       endereco: initialData?.endereco || '',
     },
-  });
+  })
 
-  const telefone = watch('telefone');
+  const telefone = watch('telefone')
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target.files?.[0]
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        setError('A imagem deve ter no máximo 5MB');
-        return;
+        setError('A imagem deve ter no máximo 5MB')
+        return
       }
-      setPhoto(file);
-      setPhotoPreview(URL.createObjectURL(file));
-      setError(null);
+      setPhoto(file)
+      setPhotoPreview(URL.createObjectURL(file))
+      setError(null)
     }
-  };
+  }
 
   const handleRemovePhoto = () => {
-    setPhoto(null);
-    setPhotoPreview(null);
+    setPhoto(null)
+    setPhotoPreview(null)
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = ''
     }
-  };
+  }
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const maskedValue = maskPhone(e.target.value);
-    setValue('telefone', maskedValue);
-  };
+    const maskedValue = maskPhone(e.target.value)
+    setValue('telefone', maskedValue)
+  }
 
   const onFormSubmit = async (data: TutorFormData) => {
     try {
-      setError(null);
-      await onSubmit(data, photo || undefined);
+      setError(null)
+      await onSubmit(data, photo || undefined)
     } catch (err) {
-      setError('Erro ao salvar tutor. Tente novamente.');
+      setError('Erro ao salvar tutor. Tente novamente.')
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
       {error && (
-        <Alert
-          variant="error"
-          message={error}
-          onClose={() => setError(null)}
-        />
+        <Alert variant="error" message={error} onClose={() => setError(null)} />
       )}
 
       {/* Upload de Foto */}
@@ -168,5 +168,5 @@ export function TutorForm({ initialData, onSubmit, isLoading = false }: TutorFor
         </Button>
       </div>
     </form>
-  );
+  )
 }

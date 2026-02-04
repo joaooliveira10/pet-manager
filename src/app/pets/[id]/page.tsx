@@ -1,59 +1,67 @@
-'use client';
+'use client'
 
-import { useEffect, useState, use } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowLeft, Edit, Trash2, PawPrint, Phone, MapPin } from 'lucide-react';
-import { Button, Loading, Alert, Card, CardBody, ConfirmModal, Avatar } from '@/components/common';
-import { usePets } from '@/hooks';
-import { useAuth } from '@/contexts';
-import { PetResponseCompletoDto } from '@/types';
-import { formatAge, formatPhone } from '@/utils/formatters';
+import {
+  Alert,
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  ConfirmModal,
+  Loading,
+} from '@/components/common'
+import { useAuth } from '@/contexts'
+import { usePets } from '@/hooks'
+import { PetResponseCompletoDto } from '@/types'
+import { formatAge, formatPhone } from '@/utils/formatters'
+import { ArrowLeft, Edit, PawPrint, Phone, Trash2 } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { use, useEffect, useState } from 'react'
 
 interface PetDetailPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>
 }
 
 export default function PetDetailPage({ params }: PetDetailPageProps) {
-  const { id } = use(params);
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
-  const { getPetById, deletePet, isLoading, error } = usePets();
-  const [pet, setPet] = useState<PetResponseCompletoDto | null>(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const { id } = use(params)
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const { getPetById, deletePet, isLoading, error } = usePets()
+  const [pet, setPet] = useState<PetResponseCompletoDto | null>(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   useEffect(() => {
     if (isAuthenticated && id) {
-      loadPet();
+      loadPet()
     }
-  }, [isAuthenticated, id]);
+  }, [isAuthenticated, id])
 
   const loadPet = async () => {
-    const petData = await getPetById(Number(id));
-    setPet(petData);
-  };
+    const petData = await getPetById(Number(id))
+    setPet(petData)
+  }
 
   const handleDelete = async () => {
-    const success = await deletePet(Number(id));
+    const success = await deletePet(Number(id))
     if (success) {
-      router.push('/');
+      router.push('/')
     } else {
-      setDeleteError('Erro ao excluir pet');
+      setDeleteError('Erro ao excluir pet')
     }
-  };
+  }
 
   if (!isAuthenticated) {
     return (
       <div className="text-center py-16">
         <p className="text-gray-600">Faça login para ver os detalhes do pet.</p>
       </div>
-    );
+    )
   }
 
   if (isLoading) {
-    return <Loading fullScreen text="Carregando pet..." />;
+    return <Loading fullScreen text="Carregando pet..." />
   }
 
   if (error || !pet) {
@@ -67,7 +75,7 @@ export default function PetDetailPage({ params }: PetDetailPageProps) {
           </Button>
         </Link>
       </div>
-    );
+    )
   }
 
   return (
@@ -83,7 +91,11 @@ export default function PetDetailPage({ params }: PetDetailPageProps) {
       </div>
 
       {deleteError && (
-        <Alert variant="error" message={deleteError} onClose={() => setDeleteError(null)} />
+        <Alert
+          variant="error"
+          message={deleteError}
+          onClose={() => setDeleteError(null)}
+        />
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -116,7 +128,9 @@ export default function PetDetailPage({ params }: PetDetailPageProps) {
                 <dl className="space-y-3">
                   <div>
                     <dt className="text-sm font-medium text-gray-500">Raça</dt>
-                    <dd className="text-gray-900">{pet.raca || 'Não informada'}</dd>
+                    <dd className="text-gray-900">
+                      {pet.raca || 'Não informada'}
+                    </dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-gray-500">Idade</dt>
@@ -167,7 +181,9 @@ export default function PetDetailPage({ params }: PetDetailPageProps) {
                         size="md"
                       />
                       <div>
-                        <p className="font-medium text-gray-900">{tutor.nome}</p>
+                        <p className="font-medium text-gray-900">
+                          {tutor.nome}
+                        </p>
                         <p className="text-sm text-gray-500 flex items-center gap-1">
                           <Phone className="w-3 h-3" />
                           {formatPhone(tutor.telefone)}
@@ -197,5 +213,5 @@ export default function PetDetailPage({ params }: PetDetailPageProps) {
         variant="danger"
       />
     </div>
-  );
+  )
 }

@@ -1,69 +1,70 @@
-'use client';
+'use client'
 
-import { useEffect, useState, use } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import { Button, Loading, Alert, Card, CardBody } from '@/components/common';
-import { TutorForm } from '@/components/tutores';
-import { useTutores } from '@/hooks';
-import { useAuth } from '@/contexts';
-import { TutorResponseComPetsDto } from '@/types';
-import { TutorFormData } from '@/utils/validators';
+import { Alert, Button, Card, CardBody, Loading } from '@/components/common'
+import { TutorForm } from '@/components/tutores'
+import { useAuth } from '@/contexts'
+import { useTutores } from '@/hooks'
+import { TutorResponseComPetsDto } from '@/types'
+import { TutorFormData } from '@/utils/validators'
+import { ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { use, useEffect, useState } from 'react'
 
 interface EditTutorPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>
 }
 
 export default function EditTutorPage({ params }: EditTutorPageProps) {
-  const { id } = use(params);
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
-  const { getTutorById, updateTutor, uploadPhoto, isLoading, error } = useTutores();
-  const [tutor, setTutor] = useState<TutorResponseComPetsDto | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { id } = use(params)
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const { getTutorById, updateTutor, uploadPhoto, isLoading, error } =
+    useTutores()
+  const [tutor, setTutor] = useState<TutorResponseComPetsDto | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated && id) {
-      loadTutor();
+      loadTutor()
     }
-  }, [isAuthenticated, id]);
+  }, [isAuthenticated, id])
 
   const loadTutor = async () => {
-    const tutorData = await getTutorById(Number(id));
-    setTutor(tutorData);
-  };
+    const tutorData = await getTutorById(Number(id))
+    setTutor(tutorData)
+  }
 
   const handleSubmit = async (data: TutorFormData, photo?: File) => {
     try {
-      setIsSubmitting(true);
+      setIsSubmitting(true)
       const updatedTutor = await updateTutor(Number(id), {
         nome: data.nome,
         telefone: data.telefone,
         email: data.email || undefined,
         endereco: data.endereco || undefined,
-      });
+      })
 
       if (updatedTutor && photo) {
-        await uploadPhoto(updatedTutor.id, photo);
+        await uploadPhoto(updatedTutor.id, photo)
       }
 
-      router.push(`/tutores/${id}`);
+      router.push(`/tutores/${id}`)
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   if (!isAuthenticated) {
     return (
       <div className="text-center py-16">
         <p className="text-gray-600">Faça login para editar o tutor.</p>
       </div>
-    );
+    )
   }
 
   if (isLoading && !tutor) {
-    return <Loading fullScreen text="Carregando tutor..." />;
+    return <Loading fullScreen text="Carregando tutor..." />
   }
 
   if (error || !tutor) {
@@ -77,7 +78,7 @@ export default function EditTutorPage({ params }: EditTutorPageProps) {
           </Button>
         </Link>
       </div>
-    );
+    )
   }
 
   return (
@@ -102,5 +103,5 @@ export default function EditTutorPage({ params }: EditTutorPageProps) {
         </CardBody>
       </Card>
     </div>
-  );
+  )
 }

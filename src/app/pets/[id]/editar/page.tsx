@@ -1,68 +1,68 @@
-'use client';
+'use client'
 
-import { useEffect, useState, use } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import { Button, Loading, Alert, Card, CardBody } from '@/components/common';
-import { PetForm } from '@/components/pets';
-import { usePets } from '@/hooks';
-import { useAuth } from '@/contexts';
-import { PetResponseCompletoDto } from '@/types';
-import { PetFormData } from '@/utils/validators';
+import { Alert, Button, Card, CardBody, Loading } from '@/components/common'
+import { PetForm } from '@/components/pets'
+import { useAuth } from '@/contexts'
+import { usePets } from '@/hooks'
+import { PetResponseCompletoDto } from '@/types'
+import { PetFormData } from '@/utils/validators'
+import { ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { use, useEffect, useState } from 'react'
 
 interface EditPetPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>
 }
 
 export default function EditPetPage({ params }: EditPetPageProps) {
-  const { id } = use(params);
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
-  const { getPetById, updatePet, uploadPhoto, isLoading, error } = usePets();
-  const [pet, setPet] = useState<PetResponseCompletoDto | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { id } = use(params)
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const { getPetById, updatePet, uploadPhoto, isLoading, error } = usePets()
+  const [pet, setPet] = useState<PetResponseCompletoDto | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated && id) {
-      loadPet();
+      loadPet()
     }
-  }, [isAuthenticated, id]);
+  }, [isAuthenticated, id])
 
   const loadPet = async () => {
-    const petData = await getPetById(Number(id));
-    setPet(petData);
-  };
+    const petData = await getPetById(Number(id))
+    setPet(petData)
+  }
 
   const handleSubmit = async (data: PetFormData, photo?: File) => {
     try {
-      setIsSubmitting(true);
+      setIsSubmitting(true)
       const updatedPet = await updatePet(Number(id), {
         nome: data.nome,
         raca: data.raca || undefined,
         idade: data.idade ?? undefined,
-      });
+      })
 
       if (updatedPet && photo) {
-        await uploadPhoto(updatedPet.id, photo);
+        await uploadPhoto(updatedPet.id, photo)
       }
 
-      router.push(`/pets/${id}`);
+      router.push(`/pets/${id}`)
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   if (!isAuthenticated) {
     return (
       <div className="text-center py-16">
         <p className="text-gray-600">Faça login para editar o pet.</p>
       </div>
-    );
+    )
   }
 
   if (isLoading && !pet) {
-    return <Loading fullScreen text="Carregando pet..." />;
+    return <Loading fullScreen text="Carregando pet..." />
   }
 
   if (error || !pet) {
@@ -76,7 +76,7 @@ export default function EditPetPage({ params }: EditPetPageProps) {
           </Button>
         </Link>
       </div>
-    );
+    )
   }
 
   return (
@@ -101,5 +101,5 @@ export default function EditPetPage({ params }: EditPetPageProps) {
         </CardBody>
       </Card>
     </div>
-  );
+  )
 }

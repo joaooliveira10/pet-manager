@@ -1,11 +1,11 @@
-import api from './api';
 import {
-  PetResponseDto,
-  PetResponseCompletoDto,
-  PetRequestDto,
-  PagedPetResponseDto,
   AnexoResponseDto,
+  PagedPetResponseDto,
+  PetRequestDto,
+  PetResponseCompletoDto,
+  PetResponseDto,
 } from '@/types';
+import api from './api';
 
 export interface GetPetsParams {
   page?: number;
@@ -63,7 +63,7 @@ export const petService = {
   async uploadPhoto(id: number, file: File): Promise<AnexoResponseDto> {
     const formData = new FormData();
     formData.append('foto', file);
-    
+
     const response = await api.post<AnexoResponseDto>(
       `/v1/pets/${id}/fotos`,
       formData,

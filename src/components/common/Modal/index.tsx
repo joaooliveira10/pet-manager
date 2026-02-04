@@ -1,21 +1,21 @@
-'use client';
+'use client'
 
-import React, { useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X } from 'lucide-react'
+import React, { useEffect } from 'react'
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title?: string;
-  children: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg';
+  isOpen: boolean
+  onClose: () => void
+  title?: string
+  children: React.ReactNode
+  size?: 'sm' | 'md' | 'lg'
 }
 
 const sizeStyles = {
   sm: 'max-w-md',
   md: 'max-w-lg',
   lg: 'max-w-2xl',
-};
+}
 
 export function Modal({
   isOpen,
@@ -27,21 +27,21 @@ export function Modal({
   // Fechar com ESC
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
+      if (e.key === 'Escape') onClose()
+    }
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleEsc)
+      document.body.style.overflow = 'hidden'
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen, onClose]);
+      document.removeEventListener('keydown', handleEsc)
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen, onClose])
 
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   return (
     <div
@@ -82,18 +82,18 @@ export function Modal({
         <div className="px-6 py-4">{children}</div>
       </div>
     </div>
-  );
+  )
 }
 
 interface ConfirmModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  title: string;
-  message: string;
-  confirmText?: string;
-  cancelText?: string;
-  variant?: 'danger' | 'warning' | 'info';
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
+  title: string
+  message: string
+  confirmText?: string
+  cancelText?: string
+  variant?: 'danger' | 'warning' | 'info'
 }
 
 export function ConfirmModal({
@@ -110,7 +110,7 @@ export function ConfirmModal({
     danger: 'bg-red-600 hover:bg-red-700',
     warning: 'bg-yellow-600 hover:bg-yellow-700',
     info: 'bg-blue-600 hover:bg-blue-700',
-  };
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
@@ -124,8 +124,8 @@ export function ConfirmModal({
         </button>
         <button
           onClick={() => {
-            onConfirm();
-            onClose();
+            onConfirm()
+            onClose()
           }}
           className={`px-4 py-2 text-white rounded-lg transition-colors ${variantStyles[variant]}`}
         >
@@ -133,5 +133,5 @@ export function ConfirmModal({
         </button>
       </div>
     </Modal>
-  );
+  )
 }

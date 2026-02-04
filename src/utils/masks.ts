@@ -3,7 +3,7 @@
  */
 export function maskPhone(value: string): string {
   const digits = value.replace(/\D/g, '');
-  
+
   if (digits.length <= 2) {
     return digits.length ? `(${digits}` : '';
   }
@@ -28,7 +28,7 @@ export function unmaskPhone(value: string): string {
  */
 export function maskCPF(value: string): string {
   const digits = value.replace(/\D/g, '');
-  
+
   if (digits.length <= 3) {
     return digits;
   }

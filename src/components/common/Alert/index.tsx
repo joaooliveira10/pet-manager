@@ -1,14 +1,13 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { AlertCircle, CheckCircle, XCircle, Info, X } from 'lucide-react';
+import { AlertCircle, CheckCircle, Info, X, XCircle } from 'lucide-react'
 
 interface AlertProps {
-  variant?: 'success' | 'error' | 'warning' | 'info';
-  title?: string;
-  message: string;
-  onClose?: () => void;
-  className?: string;
+  variant?: 'success' | 'error' | 'warning' | 'info'
+  title?: string
+  message: string
+  onClose?: () => void
+  className?: string
 }
 
 const variantStyles = {
@@ -36,14 +35,14 @@ const variantStyles = {
     title: 'text-blue-800',
     message: 'text-blue-700',
   },
-};
+}
 
 const icons = {
   success: CheckCircle,
   error: XCircle,
   warning: AlertCircle,
   info: Info,
-};
+}
 
 export function Alert({
   variant = 'info',
@@ -52,8 +51,8 @@ export function Alert({
   onClose,
   className = '',
 }: AlertProps) {
-  const styles = variantStyles[variant];
-  const Icon = icons[variant];
+  const styles = variantStyles[variant]
+  const Icon = icons[variant]
 
   return (
     <div
@@ -81,5 +80,5 @@ export function Alert({
         </button>
       )}
     </div>
-  );
+  )
 }

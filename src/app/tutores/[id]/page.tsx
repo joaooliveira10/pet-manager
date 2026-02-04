@@ -1,70 +1,90 @@
-'use client';
+'use client'
 
-import { useEffect, useState, use } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft, Edit, Trash2, Phone, Mail, MapPin, PawPrint, Link2Off } from 'lucide-react';
-import { Button, Loading, Alert, Card, CardBody, ConfirmModal, Avatar } from '@/components/common';
-import { useTutores, usePets } from '@/hooks';
-import { useAuth } from '@/contexts';
-import { TutorResponseComPetsDto, PetResponseDto } from '@/types';
-import { formatPhone, formatAge } from '@/utils/formatters';
+import {
+  Alert,
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  ConfirmModal,
+  Loading,
+} from '@/components/common'
+import { useAuth } from '@/contexts'
+import { useTutores } from '@/hooks'
+import { PetResponseDto, TutorResponseComPetsDto } from '@/types'
+import { formatAge, formatPhone } from '@/utils/formatters'
+import {
+  ArrowLeft,
+  Edit,
+  Link2Off,
+  Mail,
+  MapPin,
+  PawPrint,
+  Phone,
+  Trash2,
+} from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { use, useEffect, useState } from 'react'
 
 interface TutorDetailPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>
 }
 
 export default function TutorDetailPage({ params }: TutorDetailPageProps) {
-  const { id } = use(params);
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
-  const { getTutorById, deleteTutor, unlinkPet, isLoading, error } = useTutores();
-  const [tutor, setTutor] = useState<TutorResponseComPetsDto | null>(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [petToUnlink, setPetToUnlink] = useState<PetResponseDto | null>(null);
-  const [actionError, setActionError] = useState<string | null>(null);
+  const { id } = use(params)
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const { getTutorById, deleteTutor, unlinkPet, isLoading, error } =
+    useTutores()
+  const [tutor, setTutor] = useState<TutorResponseComPetsDto | null>(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [petToUnlink, setPetToUnlink] = useState<PetResponseDto | null>(null)
+  const [actionError, setActionError] = useState<string | null>(null)
 
   useEffect(() => {
     if (isAuthenticated && id) {
-      loadTutor();
+      loadTutor()
     }
-  }, [isAuthenticated, id]);
+  }, [isAuthenticated, id])
 
   const loadTutor = async () => {
-    const tutorData = await getTutorById(Number(id));
-    setTutor(tutorData);
-  };
+    const tutorData = await getTutorById(Number(id))
+    setTutor(tutorData)
+  }
 
   const handleDelete = async () => {
-    const success = await deleteTutor(Number(id));
+    const success = await deleteTutor(Number(id))
     if (success) {
-      router.push('/tutores');
+      router.push('/tutores')
     } else {
-      setActionError('Erro ao excluir tutor');
+      setActionError('Erro ao excluir tutor')
     }
-  };
+  }
 
   const handleUnlinkPet = async () => {
-    if (!petToUnlink) return;
-    const success = await unlinkPet(Number(id), petToUnlink.id);
+    if (!petToUnlink) return
+    const success = await unlinkPet(Number(id), petToUnlink.id)
     if (success) {
-      await loadTutor();
+      await loadTutor()
     } else {
-      setActionError('Erro ao desvincular pet');
+      setActionError('Erro ao desvincular pet')
     }
-    setPetToUnlink(null);
-  };
+    setPetToUnlink(null)
+  }
 
   if (!isAuthenticated) {
     return (
       <div className="text-center py-16">
-        <p className="text-gray-600">Faça login para ver os detalhes do tutor.</p>
+        <p className="text-gray-600">
+          Faça login para ver os detalhes do tutor.
+        </p>
       </div>
-    );
+    )
   }
 
   if (isLoading) {
-    return <Loading fullScreen text="Carregando tutor..." />;
+    return <Loading fullScreen text="Carregando tutor..." />
   }
 
   if (error || !tutor) {
@@ -78,7 +98,7 @@ export default function TutorDetailPage({ params }: TutorDetailPageProps) {
           </Button>
         </Link>
       </div>
-    );
+    )
   }
 
   return (
@@ -94,7 +114,11 @@ export default function TutorDetailPage({ params }: TutorDetailPageProps) {
       </div>
 
       {actionError && (
-        <Alert variant="error" message={actionError} onClose={() => setActionError(null)} />
+        <Alert
+          variant="error"
+          message={actionError}
+          onClose={() => setActionError(null)}
+        />
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -119,7 +143,9 @@ export default function TutorDetailPage({ params }: TutorDetailPageProps) {
                 <dl className="space-y-3">
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-gray-400" />
-                    <dd className="text-gray-900">{formatPhone(tutor.telefone)}</dd>
+                    <dd className="text-gray-900">
+                      {formatPhone(tutor.telefone)}
+                    </dd>
                   </div>
                   {tutor.email && (
                     <div className="flex items-center gap-2">
@@ -187,7 +213,9 @@ export default function TutorDetailPage({ params }: TutorDetailPageProps) {
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">{pet.nome}</p>
-                        <p className="text-sm text-gray-500">{formatAge(pet.idade)}</p>
+                        <p className="text-sm text-gray-500">
+                          {formatAge(pet.idade)}
+                        </p>
                       </div>
                     </Link>
                     <button
@@ -231,5 +259,5 @@ export default function TutorDetailPage({ params }: TutorDetailPageProps) {
         variant="warning"
       />
     </div>
-  );
+  )
 }

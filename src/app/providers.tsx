@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { AuthProvider } from '@/contexts';
+import { AuthProvider } from '@/contexts'
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <AuthProvider>{children}</AuthProvider>;
+  return <AuthProvider>{children}</AuthProvider>
 }

@@ -1,49 +1,49 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import { Button, Card, CardBody } from '@/components/common';
-import { TutorForm } from '@/components/tutores';
-import { useTutores } from '@/hooks';
-import { useAuth } from '@/contexts';
-import { TutorFormData } from '@/utils/validators';
+import { Button, Card, CardBody } from '@/components/common'
+import { TutorForm } from '@/components/tutores'
+import { useAuth } from '@/contexts'
+import { useTutores } from '@/hooks'
+import { TutorFormData } from '@/utils/validators'
+import { ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function NewTutorPage() {
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
-  const { createTutor, uploadPhoto } = useTutores();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const { createTutor, uploadPhoto } = useTutores()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (data: TutorFormData, photo?: File) => {
     try {
-      setIsSubmitting(true);
+      setIsSubmitting(true)
       const newTutor = await createTutor({
         nome: data.nome,
         telefone: data.telefone,
         email: data.email || undefined,
         endereco: data.endereco || undefined,
-      });
+      })
 
       if (newTutor && photo) {
-        await uploadPhoto(newTutor.id, photo);
+        await uploadPhoto(newTutor.id, photo)
       }
 
       if (newTutor) {
-        router.push(`/tutores/${newTutor.id}`);
+        router.push(`/tutores/${newTutor.id}`)
       }
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   if (!isAuthenticated) {
     return (
       <div className="text-center py-16">
         <p className="text-gray-600">Faça login para cadastrar um tutor.</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -64,5 +64,5 @@ export default function NewTutorPage() {
         </CardBody>
       </Card>
     </div>
-  );
+  )
 }

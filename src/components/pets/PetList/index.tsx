@@ -1,14 +1,13 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { PetCard } from '../PetCard';
-import { CardSkeleton } from '@/components/common';
-import { PetResponseDto } from '@/types';
-import { PawPrint } from 'lucide-react';
+import { CardSkeleton } from '@/components/common'
+import { PetResponseDto } from '@/types'
+import { PawPrint } from 'lucide-react'
+import { PetCard } from '../PetCard'
 
 interface PetListProps {
-  pets: PetResponseDto[];
-  isLoading?: boolean;
+  pets: PetResponseDto[]
+  isLoading?: boolean
 }
 
 export function PetList({ pets, isLoading = false }: PetListProps) {
@@ -19,7 +18,7 @@ export function PetList({ pets, isLoading = false }: PetListProps) {
           <CardSkeleton key={index} />
         ))}
       </div>
-    );
+    )
   }
 
   if (pets.length === 0) {
@@ -29,7 +28,7 @@ export function PetList({ pets, isLoading = false }: PetListProps) {
         <h3 className="text-lg font-medium mb-2">Nenhum pet encontrado</h3>
         <p className="text-sm">Tente ajustar os filtros de busca</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -38,5 +37,5 @@ export function PetList({ pets, isLoading = false }: PetListProps) {
         <PetCard key={pet.id} pet={pet} />
       ))}
     </div>
-  );
+  )
 }

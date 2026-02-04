@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { tutorService, GetTutoresParams } from '@/services/tutorService';
+import { GetTutoresParams, tutorService } from '@/services/tutorService';
 import {
   PagedTutorResponseDto,
-  TutorResponseDto,
-  TutorResponseComPetsDto,
   TutorRequestDto,
+  TutorResponseComPetsDto,
+  TutorResponseDto,
 } from '@/types';
+import { useCallback, useState } from 'react';
 
 interface UseTutoresReturn {
   tutores: TutorResponseDto[];

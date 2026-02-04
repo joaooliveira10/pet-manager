@@ -5,12 +5,17 @@ const nextConfig: NextConfig = {
   output: "standalone",
   // Habilita o React Compiler
   reactCompiler: true,
-  // Configuração de imagens para domínio externo da API
+  // Configuração de imagens para domínios externos
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "pet-manager-api.geia.vip",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "s3dev.pjc.mt.gov.br",
         pathname: "/**",
       },
     ],

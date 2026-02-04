@@ -1,37 +1,40 @@
-'use client';
+'use client'
 
-import { useEffect, useState, useCallback } from 'react';
-import Link from 'next/link';
-import { Plus } from 'lucide-react';
-import { PetList } from '@/components/pets';
-import { SearchBar, Pagination, Button, Alert } from '@/components/common';
-import { usePets, usePagination } from '@/hooks';
-import { useAuth } from '@/contexts';
+import { Alert, Button, Pagination, SearchBar } from '@/components/common'
+import { PetList } from '@/components/pets'
+import { useAuth } from '@/contexts'
+import { usePagination, usePets } from '@/hooks'
+import { Plus } from 'lucide-react'
+import Link from 'next/link'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function HomePage() {
-  const { isAuthenticated } = useAuth();
-  const { pets, totalPages, isLoading, error, fetchPets } = usePets();
-  const { page, setPage } = usePagination();
-  const [searchTerm, setSearchTerm] = useState('');
+  const { isAuthenticated } = useAuth()
+  const { pets, totalPages, isLoading, error, fetchPets } = usePets()
+  const { page, setPage } = usePagination()
+  const [searchTerm, setSearchTerm] = useState('')
 
   const loadPets = useCallback(() => {
     fetchPets({
       page,
       size: 10,
       nome: searchTerm || undefined,
-    });
-  }, [page, searchTerm, fetchPets]);
+    })
+  }, [page, searchTerm, fetchPets])
 
   useEffect(() => {
     if (isAuthenticated) {
-      loadPets();
+      loadPets()
     }
-  }, [isAuthenticated, loadPets]);
+  }, [isAuthenticated, loadPets])
 
-  const handleSearch = useCallback((value: string) => {
-    setSearchTerm(value);
-    setPage(0);
-  }, [setPage]);
+  const handleSearch = useCallback(
+    (value: string) => {
+      setSearchTerm(value)
+      setPage(0)
+    },
+    [setPage],
+  )
 
   if (!isAuthenticated) {
     return (
@@ -46,7 +49,7 @@ export default function HomePage() {
           <Button>Fazer Login</Button>
         </Link>
       </div>
-    );
+    )
   }
 
   return (
@@ -73,9 +76,7 @@ export default function HomePage() {
       />
 
       {/* Error Alert */}
-      {error && (
-        <Alert variant="error" message={error} />
-      )}
+      {error && <Alert variant="error" message={error} />}
 
       {/* Pet List */}
       <PetList pets={pets} isLoading={isLoading} />
@@ -89,5 +90,5 @@ export default function HomePage() {
         />
       )}
     </div>
-  );
+  )
 }

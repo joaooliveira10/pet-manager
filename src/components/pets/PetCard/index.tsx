@@ -1,19 +1,18 @@
-'use client';
+'use client'
 
-import React from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { PawPrint } from 'lucide-react';
-import { Card, CardBody } from '@/components/common';
-import { PetResponseDto } from '@/types';
-import { formatAge } from '@/utils/formatters';
+import { Card, CardBody } from '@/components/common'
+import { PetResponseDto } from '@/types'
+import { formatAge } from '@/utils/formatters'
+import { PawPrint } from 'lucide-react'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 interface PetCardProps {
-  pet: PetResponseDto;
+  pet: PetResponseDto
 }
 
 export function PetCard({ pet }: PetCardProps) {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <Card
@@ -57,5 +56,5 @@ export function PetCard({ pet }: PetCardProps) {
         </div>
       </CardBody>
     </Card>
-  );
+  )
 }

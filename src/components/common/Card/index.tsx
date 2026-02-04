@@ -1,15 +1,20 @@
-'use client';
+'use client'
 
-import React from 'react';
+import React from 'react'
 
 interface CardProps {
-  children: React.ReactNode;
-  className?: string;
-  onClick?: () => void;
-  hoverable?: boolean;
+  children: React.ReactNode
+  className?: string
+  onClick?: () => void
+  hoverable?: boolean
 }
 
-export function Card({ children, className = '', onClick, hoverable = false }: CardProps) {
+export function Card({
+  children,
+  className = '',
+  onClick,
+  hoverable = false,
+}: CardProps) {
   return (
     <div
       onClick={onClick}
@@ -21,12 +26,12 @@ export function Card({ children, className = '', onClick, hoverable = false }: C
     >
       {children}
     </div>
-  );
+  )
 }
 
 interface CardHeaderProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.ReactNode
+  className?: string
 }
 
 export function CardHeader({ children, className = '' }: CardHeaderProps) {
@@ -34,25 +39,21 @@ export function CardHeader({ children, className = '' }: CardHeaderProps) {
     <div className={`px-4 py-3 border-b border-gray-100 ${className}`}>
       {children}
     </div>
-  );
+  )
 }
 
 interface CardBodyProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.ReactNode
+  className?: string
 }
 
 export function CardBody({ children, className = '' }: CardBodyProps) {
-  return (
-    <div className={`p-4 ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`p-4 ${className}`}>{children}</div>
 }
 
 interface CardFooterProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.ReactNode
+  className?: string
 }
 
 export function CardFooter({ children, className = '' }: CardFooterProps) {
@@ -60,5 +61,5 @@ export function CardFooter({ children, className = '' }: CardFooterProps) {
     <div className={`px-4 py-3 border-t border-gray-100 ${className}`}>
       {children}
     </div>
-  );
+  )
 }

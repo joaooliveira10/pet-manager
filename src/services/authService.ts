@@ -1,5 +1,5 @@
-import api from './api';
 import { AuthRequestDto, AuthResponseDto } from '@/types';
+import api from './api';
 
 export const authService = {
   /**
@@ -53,12 +53,12 @@ export const authService = {
    */
   isAuthenticated(): boolean {
     if (typeof window === 'undefined') return false;
-    
+
     const token = localStorage.getItem('access_token');
     const expiresAt = localStorage.getItem('expires_at');
-    
+
     if (!token || !expiresAt) return false;
-    
+
     return Date.now() < parseInt(expiresAt);
   },
 

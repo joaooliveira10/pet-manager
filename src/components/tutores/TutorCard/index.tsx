@@ -1,18 +1,17 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import { Phone, MapPin, PawPrint } from 'lucide-react';
-import { Card, CardBody, Avatar } from '@/components/common';
-import { TutorResponseDto } from '@/types';
-import { formatPhone } from '@/utils/formatters';
+import { Avatar, Card, CardBody } from '@/components/common'
+import { TutorResponseDto } from '@/types'
+import { formatPhone } from '@/utils/formatters'
+import { MapPin, Phone } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 interface TutorCardProps {
-  tutor: TutorResponseDto;
+  tutor: TutorResponseDto
 }
 
 export function TutorCard({ tutor }: TutorCardProps) {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <Card
@@ -23,11 +22,7 @@ export function TutorCard({ tutor }: TutorCardProps) {
       <CardBody>
         <div className="flex items-start gap-4">
           {/* Avatar */}
-          <Avatar
-            src={tutor.foto?.url}
-            alt={tutor.nome}
-            size="lg"
-          />
+          <Avatar src={tutor.foto?.url} alt={tutor.nome} size="lg" />
 
           {/* Informações */}
           <div className="flex-1 min-w-0">
@@ -52,5 +47,5 @@ export function TutorCard({ tutor }: TutorCardProps) {
         </div>
       </CardBody>
     </Card>
-  );
+  )
 }

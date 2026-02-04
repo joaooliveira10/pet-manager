@@ -1,4 +1,4 @@
-import { maskPhone, unmaskPhone, maskCPF, unmaskCPF, maskOnlyNumbers } from './masks';
+import { maskCPF, maskOnlyNumbers, maskPhone, unmaskCPF, unmaskPhone } from './masks';
 
 describe('masks', () => {
   describe('maskPhone', () => {

@@ -1,44 +1,45 @@
-'use client';
+'use client'
 
-import { useEffect, useState, useCallback } from 'react';
-import Link from 'next/link';
-import { Plus } from 'lucide-react';
-import { TutorList } from '@/components/tutores';
-import { SearchBar, Pagination, Button, Alert } from '@/components/common';
-import { useTutores, usePagination } from '@/hooks';
-import { useAuth } from '@/contexts';
+import { Alert, Button, Pagination, SearchBar } from '@/components/common'
+import { TutorList } from '@/components/tutores'
+import { useAuth } from '@/contexts'
+import { usePagination, useTutores } from '@/hooks'
+import { Plus } from 'lucide-react'
+import Link from 'next/link'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function TutoresPage() {
-  const { isAuthenticated } = useAuth();
-  const { tutores, totalPages, isLoading, error, fetchTutores } = useTutores();
-  const { page, setPage } = usePagination();
-  const [searchTerm, setSearchTerm] = useState('');
+  const { isAuthenticated } = useAuth()
+  const { tutores, totalPages, isLoading, error, fetchTutores } = useTutores()
+  const { page, setPage } = usePagination()
+  const [searchTerm, setSearchTerm] = useState('')
 
   const loadTutores = useCallback(() => {
     fetchTutores({
       page,
       size: 10,
       nome: searchTerm || undefined,
-    });
-  }, [page, searchTerm, fetchTutores]);
+    })
+  }, [page, searchTerm, fetchTutores])
 
   useEffect(() => {
     if (isAuthenticated) {
-      loadTutores();
+      loadTutores()
     }
-  }, [isAuthenticated, loadTutores]);
+  }, [isAuthenticated, loadTutores])
 
-  const handleSearch = useCallback((value: string) => {
-    setSearchTerm(value);
-    setPage(0);
-  }, [setPage]);
+  const handleSearch = useCallback(
+    (value: string) => {
+      setSearchTerm(value)
+      setPage(0)
+    },
+    [setPage],
+  )
 
   if (!isAuthenticated) {
     return (
       <div className="text-center py-16">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">
-          Tutores
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">Tutores</h1>
         <p className="text-gray-600 mb-8">
           Faça login para acessar a lista de tutores.
         </p>
@@ -46,7 +47,7 @@ export default function TutoresPage() {
           <Button>Fazer Login</Button>
         </Link>
       </div>
-    );
+    )
   }
 
   return (
@@ -73,9 +74,7 @@ export default function TutoresPage() {
       />
 
       {/* Error Alert */}
-      {error && (
-        <Alert variant="error" message={error} />
-      )}
+      {error && <Alert variant="error" message={error} />}
 
       {/* Tutor List */}
       <TutorList tutores={tutores} isLoading={isLoading} />
@@ -89,5 +88,5 @@ export default function TutoresPage() {
         />
       )}
     </div>
-  );
+  )
 }

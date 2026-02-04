@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { PawPrint } from 'lucide-react';
-import { Button, Input, Alert, Card, CardBody } from '@/components/common';
-import { useAuth } from '@/contexts';
-import { loginSchema, LoginFormData } from '@/utils/validators';
+import { Alert, Button, Card, CardBody, Input } from '@/components/common'
+import { useAuth } from '@/contexts'
+import { LoginFormData, loginSchema } from '@/utils/validators'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { PawPrint } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 export default function LoginPage() {
-  const router = useRouter();
-  const { login, isLoading } = useAuth();
-  const [error, setError] = useState<string | null>(null);
+  const router = useRouter()
+  const { login, isLoading } = useAuth()
+  const [error, setError] = useState<string | null>(null)
 
   const {
     register,
@@ -24,20 +24,20 @@ export default function LoginPage() {
       username: '',
       password: '',
     },
-  });
+  })
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      setError(null);
-      await login(data);
+      setError(null)
+      await login(data)
     } catch (err: any) {
       if (err.response?.status === 401) {
-        setError('Usuário ou senha inválidos');
+        setError('Usuário ou senha inválidos')
       } else {
-        setError('Erro ao fazer login. Tente novamente.');
+        setError('Erro ao fazer login. Tente novamente.')
       }
     }
-  };
+  }
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
@@ -88,10 +88,11 @@ export default function LoginPage() {
 
           {/* Hint */}
           <p className="mt-6 text-center text-sm text-gray-500">
-            Credenciais de teste: <strong>admin</strong> / <strong>admin</strong>
+            Credenciais de teste: <strong>admin</strong> /{' '}
+            <strong>admin</strong>
           </p>
         </CardBody>
       </Card>
     </div>
-  );
+  )
 }

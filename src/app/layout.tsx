@@ -1,31 +1,32 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./providers";
-import { Navbar } from "@/components/common";
+import { Navbar } from '@/components/common'
+import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import './globals.css'
+import { Providers } from './providers'
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
+})
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
-  title: "Pet Manager - Registro de Pets e Tutores",
-  description: "Sistema de registro público de Pets e Tutores do Estado de Mato Grosso",
-};
+  title: 'Pet Manager - Registro de Pets e Tutores',
+  description:
+    'Sistema de registro público de Pets e Tutores do Estado de Mato Grosso',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 min-h-screen`}
       >
@@ -37,5 +38,5 @@ export default function RootLayout({
         </Providers>
       </body>
     </html>
-  );
+  )
 }

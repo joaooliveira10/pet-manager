@@ -63,18 +63,18 @@ src/
 
 ## ⚙️ Tecnologias Utilizadas
 
-| Tecnologia | Versão | Descrição |
-|------------|--------|-----------|
-| Next.js | 16.1.6 | Framework React com App Router |
-| React | 19.2.3 | Biblioteca de UI |
-| TypeScript | 5.x | Tipagem estática |
-| Tailwind CSS | 4.x | Framework CSS utility-first |
-| Axios | 1.13.4 | Cliente HTTP |
-| React Hook Form | 7.71.1 | Gerenciamento de formulários |
-| Zod | 4.3.6 | Validação de schemas |
-| Lucide React | 0.563.0 | Biblioteca de ícones |
-| Jest | 29.x | Framework de testes |
-| Testing Library | 16.x | Testes de componentes |
+| Tecnologia      | Versão  | Descrição                      |
+| --------------- | ------- | ------------------------------ |
+| Next.js         | 16.1.6  | Framework React com App Router |
+| React           | 19.2.3  | Biblioteca de UI               |
+| TypeScript      | 5.x     | Tipagem estática               |
+| Tailwind CSS    | 4.x     | Framework CSS utility-first    |
+| Axios           | 1.13.4  | Cliente HTTP                   |
+| React Hook Form | 7.71.1  | Gerenciamento de formulários   |
+| Zod             | 4.3.6   | Validação de schemas           |
+| Lucide React    | 0.563.0 | Biblioteca de ícones           |
+| Jest            | 29.x    | Framework de testes            |
+| Testing Library | 16.x    | Testes de componentes          |
 
 ---
 
@@ -152,6 +152,7 @@ curl http://localhost:3000/api/health
 ```
 
 Resposta esperada:
+
 ```json
 {
   "status": "healthy",
@@ -201,18 +202,21 @@ Os testes unitários cobrem:
 ### Requisitos Específicos
 
 #### 1. Tela Inicial - Listagem de Pets
+
 - [x] GET /v1/pets
 - [x] Exibição em cards (foto, nome, espécie, idade)
 - [x] Paginação (10 por página)
 - [x] Busca por nome para filtrar
 
 #### 2. Tela de Detalhamento do Pet
+
 - [x] Navegação ao clicar no card
 - [x] GET /v1/pets/{id}
 - [x] Exibição de dados do tutor vinculado
 - [x] Destaque ao nome do pet
 
 #### 3. Tela de Cadastro/Edição de Pet
+
 - [x] Formulário novo pet (POST /v1/pets)
 - [x] Edição (PUT /v1/pets/{id})
 - [x] Campos: nome, espécie, idade, raça
@@ -220,6 +224,7 @@ Os testes unitários cobrem:
 - [x] Validação com Zod
 
 #### 4. Tela de Cadastro/Edição de Tutor
+
 - [x] Cadastro de tutores (POST /v1/tutores)
 - [x] Atualização (PUT /v1/tutores/{id})
 - [x] Campos: nome completo, telefone, endereço
@@ -227,11 +232,13 @@ Os testes unitários cobrem:
 - [x] Máscaras de entrada (telefone, CPF)
 
 #### 5. Vinculação Pet-Tutor
+
 - [x] Listagem de pets vinculados na tela do tutor
 - [x] Vincular novo pet (POST /v1/tutores/{id}/pets/{petId})
 - [x] Remover vínculo (DELETE /v1/tutores/{id}/pets/{petId})
 
 #### 6. Autenticação
+
 - [x] Autenticação via POST /autenticacao/login
 - [x] Gerenciamento de expiração do token via PUT /autenticacao/refresh
 - [x] Interceptor Axios para refresh automático

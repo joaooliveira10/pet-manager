@@ -1,48 +1,48 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import { Button, Card, CardBody } from '@/components/common';
-import { PetForm } from '@/components/pets';
-import { usePets } from '@/hooks';
-import { useAuth } from '@/contexts';
-import { PetFormData } from '@/utils/validators';
+import { Button, Card, CardBody } from '@/components/common'
+import { PetForm } from '@/components/pets'
+import { useAuth } from '@/contexts'
+import { usePets } from '@/hooks'
+import { PetFormData } from '@/utils/validators'
+import { ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function NewPetPage() {
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
-  const { createPet, uploadPhoto } = usePets();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const { createPet, uploadPhoto } = usePets()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (data: PetFormData, photo?: File) => {
     try {
-      setIsSubmitting(true);
+      setIsSubmitting(true)
       const newPet = await createPet({
         nome: data.nome,
         raca: data.raca || undefined,
         idade: data.idade ?? undefined,
-      });
+      })
 
       if (newPet && photo) {
-        await uploadPhoto(newPet.id, photo);
+        await uploadPhoto(newPet.id, photo)
       }
 
       if (newPet) {
-        router.push(`/pets/${newPet.id}`);
+        router.push(`/pets/${newPet.id}`)
       }
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   if (!isAuthenticated) {
     return (
       <div className="text-center py-16">
         <p className="text-gray-600">Faça login para cadastrar um pet.</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -63,5 +63,5 @@ export default function NewPetPage() {
         </CardBody>
       </Card>
     </div>
-  );
+  )
 }

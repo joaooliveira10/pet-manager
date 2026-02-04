@@ -1,4 +1,4 @@
-import { formatPhone, formatCPF, formatAge, truncateText, getInitials } from './formatters';
+import { formatAge, formatCPF, formatPhone, getInitials, truncateText } from './formatters';
 
 describe('formatters', () => {
   describe('formatPhone', () => {

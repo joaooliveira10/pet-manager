@@ -1,93 +1,104 @@
-'use client';
+'use client'
 
-import { useEffect, useState, use, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft, PawPrint, Check } from 'lucide-react';
-import { Button, Loading, Alert, Card, CardBody, SearchBar, Pagination } from '@/components/common';
-import { useTutores, usePets, usePagination } from '@/hooks';
-import { useAuth } from '@/contexts';
-import { TutorResponseComPetsDto } from '@/types';
-import { formatAge } from '@/utils/formatters';
+import {
+  Alert,
+  Button,
+  Card,
+  CardBody,
+  Loading,
+  Pagination,
+  SearchBar,
+} from '@/components/common'
+import { useAuth } from '@/contexts'
+import { usePagination, usePets, useTutores } from '@/hooks'
+import { TutorResponseComPetsDto } from '@/types'
+import { formatAge } from '@/utils/formatters'
+import { ArrowLeft, Check, PawPrint } from 'lucide-react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { use, useCallback, useEffect, useState } from 'react'
 
 interface VincularPetPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>
 }
 
 export default function VincularPetPage({ params }: VincularPetPageProps) {
-  const { id } = use(params);
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
-  const { getTutorById, linkPet } = useTutores();
-  const { pets, totalPages, isLoading: petsLoading, fetchPets } = usePets();
-  const { page, setPage } = usePagination();
-  const [tutor, setTutor] = useState<TutorResponseComPetsDto | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isLinking, setIsLinking] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const { id } = use(params)
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const { getTutorById, linkPet } = useTutores()
+  const { pets, totalPages, isLoading: petsLoading, fetchPets } = usePets()
+  const { page, setPage } = usePagination()
+  const [tutor, setTutor] = useState<TutorResponseComPetsDto | null>(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [isLinking, setIsLinking] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
 
   useEffect(() => {
     if (isAuthenticated && id) {
-      loadTutor();
+      loadTutor()
     }
-  }, [isAuthenticated, id]);
+  }, [isAuthenticated, id])
 
   const loadTutor = async () => {
-    const tutorData = await getTutorById(Number(id));
-    setTutor(tutorData);
-  };
+    const tutorData = await getTutorById(Number(id))
+    setTutor(tutorData)
+  }
 
   const loadPets = useCallback(() => {
     fetchPets({
       page,
       size: 10,
       nome: searchTerm || undefined,
-    });
-  }, [page, searchTerm, fetchPets]);
+    })
+  }, [page, searchTerm, fetchPets])
 
   useEffect(() => {
     if (isAuthenticated) {
-      loadPets();
+      loadPets()
     }
-  }, [isAuthenticated, loadPets]);
+  }, [isAuthenticated, loadPets])
 
-  const handleSearch = useCallback((value: string) => {
-    setSearchTerm(value);
-    setPage(0);
-  }, [setPage]);
+  const handleSearch = useCallback(
+    (value: string) => {
+      setSearchTerm(value)
+      setPage(0)
+    },
+    [setPage],
+  )
 
   const handleLinkPet = async (petId: number, petName: string) => {
     try {
-      setIsLinking(true);
-      setError(null);
-      const success = await linkPet(Number(id), petId);
+      setIsLinking(true)
+      setError(null)
+      const success = await linkPet(Number(id), petId)
       if (success) {
-        setSuccess(`Pet "${petName}" vinculado com sucesso!`);
-        await loadTutor();
-        setTimeout(() => setSuccess(null), 3000);
+        setSuccess(`Pet "${petName}" vinculado com sucesso!`)
+        await loadTutor()
+        setTimeout(() => setSuccess(null), 3000)
       } else {
-        setError('Erro ao vincular pet');
+        setError('Erro ao vincular pet')
       }
     } finally {
-      setIsLinking(false);
+      setIsLinking(false)
     }
-  };
+  }
 
   const isPetLinked = (petId: number) => {
-    return tutor?.pets?.some((p) => p.id === petId) || false;
-  };
+    return tutor?.pets?.some((p) => p.id === petId) || false
+  }
 
   if (!isAuthenticated) {
     return (
       <div className="text-center py-16">
         <p className="text-gray-600">Faça login para vincular pets.</p>
       </div>
-    );
+    )
   }
 
   if (!tutor) {
-    return <Loading fullScreen text="Carregando..." />;
+    return <Loading fullScreen text="Carregando..." />
   }
 
   return (
@@ -111,9 +122,7 @@ export default function VincularPetPage({ params }: VincularPetPageProps) {
         <Alert variant="error" message={error} onClose={() => setError(null)} />
       )}
 
-      {success && (
-        <Alert variant="success" message={success} />
-      )}
+      {success && <Alert variant="success" message={success} />}
 
       {/* Search */}
       <SearchBar
@@ -135,7 +144,7 @@ export default function VincularPetPage({ params }: VincularPetPageProps) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {pets.map((pet) => {
-            const isLinked = isPetLinked(pet.id);
+            const isLinked = isPetLinked(pet.id)
             return (
               <Card key={pet.id}>
                 <CardBody>
@@ -168,7 +177,7 @@ export default function VincularPetPage({ params }: VincularPetPageProps) {
                   </div>
                 </CardBody>
               </Card>
-            );
+            )
           })}
         </div>
       )}
@@ -182,5 +191,5 @@ export default function VincularPetPage({ params }: VincularPetPageProps) {
         />
       )}
     </div>
-  );
+  )
 }

@@ -1,13 +1,13 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search, X } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 
 interface SearchBarProps {
-  placeholder?: string;
-  onSearch: (value: string) => void;
-  debounceMs?: number;
-  className?: string;
+  placeholder?: string
+  onSearch: (value: string) => void
+  debounceMs?: number
+  className?: string
 }
 
 export function SearchBar({
@@ -16,21 +16,21 @@ export function SearchBar({
   debounceMs = 300,
   className = '',
 }: SearchBarProps) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('')
 
   // Debounce da busca
   useEffect(() => {
     const timer = setTimeout(() => {
-      onSearch(value);
-    }, debounceMs);
+      onSearch(value)
+    }, debounceMs)
 
-    return () => clearTimeout(timer);
-  }, [value, debounceMs, onSearch]);
+    return () => clearTimeout(timer)
+  }, [value, debounceMs, onSearch])
 
   const handleClear = useCallback(() => {
-    setValue('');
-    onSearch('');
-  }, [onSearch]);
+    setValue('')
+    onSearch('')
+  }, [onSearch])
 
   return (
     <div className={`relative ${className}`}>
@@ -59,5 +59,5 @@ export function SearchBar({
         </button>
       )}
     </div>
-  );
+  )
 }
