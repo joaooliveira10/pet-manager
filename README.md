@@ -259,7 +259,8 @@ O projeto foi desenvolvido com commits pequenos e descritivos:
 9. `feat: implementa componentes de Pets e Tutores`
 10. `feat: implementa páginas da aplicação`
 11. `test: adiciona testes unitários para utilitários`
-12. `chore: configura Docker para containerização`
+12. `chore: configura Docker e documenta projeto`
+13. `fix: resolve conflito de exportação circular em tipos`
 
 ---
 

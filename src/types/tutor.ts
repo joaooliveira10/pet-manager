@@ -1,6 +1,7 @@
 // Tipos para Tutores
 
-import { AnexoResponseDto, PetResponseDto } from './pet';
+import type { AnexoResponseDto } from "./common";
+import type { PetResponseDto } from "./pet";
 
 export interface TutorResponseDto {
   id: number;
