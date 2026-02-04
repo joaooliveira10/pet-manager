@@ -25,9 +25,7 @@ export function Navbar() {
   // Renderiza um placeholder durante a hidratação para evitar mismatch
   const renderAuthButton = () => {
     if (!mounted || isLoading) {
-      return (
-        <div className="w-20 h-9 bg-gray-200 rounded-lg animate-pulse" />
-      )
+      return <div className="w-20 h-9 bg-gray-200 rounded-lg animate-pulse" />
     }
 
     if (isAuthenticated) {
@@ -104,9 +102,7 @@ export function Navbar() {
           </div>
 
           {/* Auth Button */}
-          <div className="flex items-center">
-            {renderAuthButton()}
-          </div>
+          <div className="flex items-center">{renderAuthButton()}</div>
         </div>
       </div>
 

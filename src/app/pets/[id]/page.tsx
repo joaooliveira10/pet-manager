@@ -111,6 +111,7 @@ export default function PetDetailPage({ params }: PetDetailPageProps) {
                     alt={pet.nome}
                     fill
                     className="object-cover"
+                    sizes="(max-width: 640px) 100vw, 192px"
                   />
                 ) : (
                   <div className="flex items-center justify-center w-full h-full">
