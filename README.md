@@ -12,6 +12,8 @@
 
 Este projeto é uma **SPA (Single Page Application)** desenvolvida em **React** com **Next.js 16** para gerenciamento de Pets e seus Tutores. A aplicação consome a API pública do Estado de Mato Grosso para registro de Pets, permitindo operações de CRUD completas.
 
+**Acesse a aplicação disponivel online:** https://joaoangellorodriguesdeoliveira04240.vercel.app/
+
 ### 🔗 API
 
 - **Swagger:** https://pet-manager-api.geia.vip/q/swagger-ui/
