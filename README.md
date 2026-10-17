@@ -3,7 +3,6 @@
 ## 📋 Dados de Inscrição
 
 - **Nome do Candidato:** João Angello Rodrigues de Oliveira
-- **CPF:** 042.402.XXX-XX
 - **Vaga Pretendida:** Desenvolvedor Front End
 
 ---
@@ -95,7 +94,7 @@ src/
 git clone <url-do-repositorio>
 
 # Entre no diretório do projeto
-cd joaoangellorodriguesdeoliveira042402
+cd pet-manager
 
 # Instale as dependências
 npm install
